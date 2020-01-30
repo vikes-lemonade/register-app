@@ -1,6 +1,6 @@
 # register-app
-
 > Register app for Software Engineering project
+> Basic project for cashiers to manage transactions
 
 ## Build Setup
 
@@ -20,3 +20,5 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+======= 
+
