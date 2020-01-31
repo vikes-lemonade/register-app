@@ -1,6 +1,10 @@
 <template>
   <div>
-
+    <v-card>
+      <v-card-title>
+        This is a card
+      </v-card-title>
+    </v-card>
   </div>
 </template>
 

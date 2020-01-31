@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar>
+    <v-app-bar dense app>
       <v-toolbar-title headline font-weight-light>Register App</v-toolbar-title>
     </v-app-bar>
     <v-content>
