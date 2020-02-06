@@ -37,10 +37,11 @@ export default {
   plugins: [
   ],
   /*
-  ** Nuxt.js dev-modules
+  ** Nuxt.js dev-moduls
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/axios'
   ],
   /*
   ** Nuxt.js modules
