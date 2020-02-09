@@ -21,7 +21,7 @@ export default {
 
   },
   async asyncData({ $axios }) {
-    const ip = await $axios.$get('http://icanhazip.com')
+    const ip = await $axios.$get('testvirt101.herokuapp.com/api/v1/products/all')
     return { ip }
   }
 }
