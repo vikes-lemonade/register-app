@@ -4,7 +4,11 @@
        <v-card-title>
          This is a card
        </v-card-title>
-        {{ ip }}
+      <ul>
+        <li v-for="product in products" class ="items">
+          Id: {{product.id}}, Count: {{product.count}}, Lookup-code: {{String(product.lookup-code)}}, Created: {{product.creation}}
+        </li>
+      </ul>
     </v-card>
   </div>
 </template>
@@ -21,8 +25,8 @@ export default {
 
   },
   async asyncData({ $axios }) {
-    const ip = await $axios.$get('testvirt101.herokuapp.com/api/v1/products/all')
-    return { ip }
+    const data = await $axios.$get('http://testvirt101.herokuapp.com/api/v1/products/all')
+    return { products:data }
   }
 }
 </script>
