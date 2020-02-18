@@ -1,20 +1,22 @@
 <template>
   <div>
-    <v-card>
-       <v-card-title>
-         This is a card
-       </v-card-title>
-      <ul>
-        <li v-for="product in products" class ="items">
-          Id: {{product.id}}, Count: {{product.count}}, Lookup-code: {{String(product.lookup-code)}}, Created: {{product.creation}}
-        </li>
-      </ul>
-    </v-card>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-col cols="10">
+          <products :productData="productData"></products>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
+import products from "../components/products/products"
+
 export default {
+  components: {
+    products
+  },
   data: () => ({
 
   }),
@@ -26,7 +28,7 @@ export default {
   },
   async asyncData({ $axios }) {
     const data = await $axios.$get('http://testvirt101.herokuapp.com/api/v1/products/all')
-    return { products:data }
+    return { productData:data }
   }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <v-app dark>
+  <v-app dark style="background-color: #BDBDBD">
     <v-app-bar dense app>
       <v-toolbar-title headline font-weight-light>Register App</v-toolbar-title>
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>

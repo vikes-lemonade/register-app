@@ -5,9 +5,8 @@ export default {
   /*
   ** Headers of the page
   */
-  head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+  head: { 
+    title: "Vikes Lemonade - Register App",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -67,6 +66,15 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light: {
+          primary: colors.deepPurple.darken2,
+          accent: colors.grey.darken1,
+          secondary: colors.green.lighten1,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        },
         dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
