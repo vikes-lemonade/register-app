@@ -23,6 +23,7 @@ export default {
   // async asyncData({store}) {
   //   await store.dispatch("SomeRandomAction")
   // },
+  //
   methods: {
 
   },
