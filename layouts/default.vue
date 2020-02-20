@@ -1,8 +1,15 @@
 <template>
   <v-app dark style="background-color: #BDBDBD">
-    <v-app-bar dense app>
+    <v-toolbar>
       <v-toolbar-title headline font-weight-light>Register App</v-toolbar-title>
-    </v-app-bar>
+      <v-spacer/>
+      <v-toolbar-items>
+        <v-btn v-for="(item, index) in items" :key="index" :to="item.to" text>
+          <v-icon>{{item.icon}}</v-icon>{{item.title}}
+        </v-btn>
+      </v-toolbar-items>
+
+    </v-toolbar>
     <v-content>
       <v-container fluid>
         <nuxt />
@@ -21,14 +28,14 @@ export default {
     return {
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'home',
+          title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'person_outline',
+          title: 'Login',
+          to: '/login'
         }
       ],
     }
