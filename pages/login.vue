@@ -1,23 +1,18 @@
 <template>
-  <div>
-      <form>
-        <v-text-field label="Employee ID" v-model="id" required></v-text-field>
-        <v-text-field label="Password" v-model="password" required></v-text-field>
-        <v-btn @click="login">Submit</v-btn>
-      </form>
-  </div>
+  <v-container>
+    <login></login>
+  </v-container>
 </template>
 
 <script>
+  import login from "../components/login/login"
   export default {
+    components: {
+      login
+    },
     data: () => ({
-      id: "",
-      password: ""
     }),
     methods: {
-      login(){
-        this.$router.replace({ name:"index" })
-      }
     }
   }
 </script>
