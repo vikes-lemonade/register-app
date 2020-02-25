@@ -61,12 +61,18 @@
 </template>
 
 <script>
+
 export default {
   name: "Products",
-  props: ["productData"],
+  props: [],
   data: () => ({
 
-  })
+  }),
+  computed: {
+    ...mapGetters({
+      productData: 'getProducts'
+    })
+  }
 }
 </script>
 

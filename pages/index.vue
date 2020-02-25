@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row justify="center">
         <v-col cols="10">
-          <products :productData="productData"></products>
+          <products></products>
         </v-col>
       </v-row>
     </v-container>
@@ -20,16 +20,8 @@ export default {
   data: () => ({
 
   }),
-  // async asyncData({store}) {
-  //   await store.dispatch("SomeRandomAction")
-  // },
-  //
-  methods: {
-
+  async asyncData({store}) {
+     await store.dispatch("FETCH_PRODUCTS")
   },
-  async asyncData({ $axios }) {
-    const data = await $axios.$get('http://testvirt101.herokuapp.com/api/v1/products/all')
-    return { productData:data }
-  }
 }
 </script>
