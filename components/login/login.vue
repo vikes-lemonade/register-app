@@ -15,14 +15,37 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data: () => ({
       id: "",
       password: ""
     }),
     methods: {
-      login(){
-        this.$router.push({name: "index"})
+      fetch(url){
+          return axios.get(url)
+      },
+      async login(){
+        if((this.id.localeCompare("") != 0) && (this.password.localeCompare("") != 0)) {
+          let user = []
+          try {
+            let url = 'http://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid='
+            url = url.concat(this.id)
+            user = await this.fetch(url)
+          }
+          catch(e){
+            console.log('invalid ID')
+            return
+          }
+          console.log(user)
+          if(user.data[0].password == this.password){
+            console.log('correct password')
+            await this.$router.push({name: "index"})
+          }
+          else{
+            console.log('incorrect password')
+          }
+        }
       }
     }
   }
