@@ -5,7 +5,7 @@ export default {
   /*
   ** Headers of the page
   */
-  head: { 
+  head: {
     title: "Vikes Lemonade - Register App",
     meta: [
       { charset: 'utf-8' },

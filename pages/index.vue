@@ -28,7 +28,7 @@ export default {
 
   },
   async asyncData({ $axios }) {
-    const data = await $axios.$get('http://testvirt101.herokuapp.com/api/v1/products/all')
+    const data = await $axios.$get('https://peaceful-bastion-45955.herokuapp.com/api/v1/products/all')
     return { productData:data }
   }
 }
