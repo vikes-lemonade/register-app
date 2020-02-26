@@ -45,10 +45,9 @@
         if((this.id.localeCompare("") != 0) && (this.password.localeCompare("") != 0)) {
           let user = []
           try {
-            let url = 'http://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid='
+            let url = 'https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid='
             url = url.concat(this.id)
             user = await this.fetch(url)
-            console.log(user)
             if (user.data[0].password == this.password) {
               await this.$router.push({name: "index"})
             } else {
