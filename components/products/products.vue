@@ -61,12 +61,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Products",
-  props: ["productData"],
+  props: [],
   data: () => ({
 
-  })
+  }),
+  computed: {
+    ...mapGetters({
+      productData: 'getProducts'
+    })
+  }
 }
 </script>
 
