@@ -17,12 +17,18 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row align="center" justify="space-around" class="pt-6">
+      <pulse-loader :loading="loading" color="#AB47BC"></pulse-loader>
+    </v-row>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
+  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   export default {
+    components: {
+      PulseLoader
+    },
     data: () => ({
       valid: true,
       id: '',
@@ -35,30 +41,36 @@
         v => !!v || 'Password is required'
       ],
       snackbar: false,
-      text: ''
+      text: '',
+      loading: false
     }),
     methods: {
       fetch(url){
-          return axios.get(url)
+          return this.$axios.get(url)
       },
       async login(){
         if((this.id.localeCompare("") != 0) && (this.password.localeCompare("") != 0)) {
+          let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid=${this.id}`
           let user = []
-          try {
-            let url = 'https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid='
-            url = url.concat(this.id)
-            user = await this.fetch(url)
-            if (user.data[0].password == this.password) {
-              await this.$router.push({name: "index"})
-            } else {
-              this.text = 'Invalid password'
-              this.snackbar = true
-            }
-          }
-          catch(e){
+          this.loading = true
+          await this.$axios.get(url)
+            .then(response => {
+              user = response
+            })
+            .catch(err => {
+              console.log(err)
+            })
+          this.loading = false
+          try{
+           if (user.data[0].password === this.password) {
+             await this.$router.push({name: "index"})
+           } else {
+             this.text = 'Invalid password'
+             this.snackbar = true
+           }
+          } catch {
             this.text = 'Invalid ID'
             this.snackbar = true
-            return
           }
         }
       },

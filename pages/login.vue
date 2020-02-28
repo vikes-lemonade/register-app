@@ -7,6 +7,7 @@
 <script>
   import login from "../components/login/login"
   export default {
+    layout: 'withoutmenu',
     components: {
       login
     },
