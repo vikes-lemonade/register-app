@@ -18,9 +18,7 @@ const actions = {
   async FETCH_PRODUCTS({ commit }) {
     await this.$axios.$get(URL('/products/all')) 
       .then(res => {
-        if (res.status === 200) {
-          commit("SET_PRODUCTS", res.data)
-        }
+        commit("SET_PRODUCTS", res)
       })
       .catch(err => {
         console.log(err)
@@ -29,9 +27,7 @@ const actions = {
   async FETCH_PRODUCT({ commit }, lookupCode) {
     await this.$axios.$get(URL(`/product?lookup=${lookupCode}`))
       .then(res => {
-        if (res.status === 200) {
-          commit("SET_PRODUCT", res.data)
-        }
+        commit("SET_PRODUCT", res)
       })
       .catch(err => {
         console.log(err)
@@ -40,9 +36,7 @@ const actions = {
   async FETCH_EMPLOYEES({ commit }) {
     await this.$axios.$get(URL(`/employee/all`)) 
       .then(res => {
-        if (res.status === 200) {
-          commit("SET_EMPLOYEES", res.data)
-        }
+        commit("SET_EMPLOYEES", res)
       })
       .catch(err => {
         console.log(err)
@@ -51,9 +45,7 @@ const actions = {
   async FETCH_EMPLOYEE({ commit }, employeeId) {
     await this.$axios.$get(URL(`/employee?employeeid=${employeeId}`)) 
       .then(res => {
-        if (res.status === 200) {
-          commit("SET_EMPLOYEE", res.data)
-        }
+        commit("SET_EMPLOYEE", res)
       })
       .catch(err => {
         console.log(err)
