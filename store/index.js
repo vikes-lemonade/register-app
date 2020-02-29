@@ -1,4 +1,4 @@
-const BASE_API_URL = process.env.BASE_API_URL || ""
+const BASE_API_URL = "https://peaceful-bastion-45955.herokuapp.com/api/v1" // process.env.BASE_API_URL || ""
 
 export const state = () => ({
   products: [],
