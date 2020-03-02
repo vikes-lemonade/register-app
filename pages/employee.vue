@@ -1,42 +1,23 @@
 <template>
-<!--  <v-container>-->
-<!--    <div>-->
-<!--      <b-card no-body>-->
-<!--        <b-tabs card>-->
-<!--          <b-tab title="Tab 1" active>-->
-<!--            <b-card-text>Tab contents 1</b-card-text>-->
-<!--          </b-tab>-->
-<!--          <b-tab title="Tab 2">-->
-<!--            <b-card-text>Tab contents 2</b-card-text>-->
-<!--          </b-tab>-->
-<!--        </b-tabs>-->
-<!--      </b-card>-->
-<!--    </div>-->
-<!--  </v-container>-->
-
   <div>
-    <b-card no-body>
-      <b-tabs card>
-        <b-tab title="Tab 1" active>
-          <b-card-text>Tab contents 1</b-card-text>
-        </b-tab>
-        <b-tab title="Tab 2">
-          <b-card-text>Tab contents 2</b-card-text>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-col cols="10">
+          <create-employee></create-employee>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-  import create_employee from "../components/employee/create_employee"
+  import createEmployee from "../components/employee/create-employee";
 
   export default {
+    name: 'EmployeeManagerComponent',
     layout: 'withoutmenu',
     components: {
-      create_employee
-    },
-    data: () => ({message: 'Hello Vue!'}),
-    methods: {}
+      createEmployee
+    }
   }
 </script>
