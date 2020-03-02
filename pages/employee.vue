@@ -1,27 +1,23 @@
 <template>
-<body>
   <div>
-    <b-card no-body>
-      <b-tabs card>
-        <b-tab title="Create Employee" active>
-          <v-container>
-          <create_employee></create_employee>
-          </v-container>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-col cols="10">
+          <create-employee></create-employee>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
-  </body>
 </template>
 
 <script>
-  import create_employee from "../components/employee/create_employee";
+  import createEmployee from "../components/employee/create-employee";
 
   export default {
     name: 'EmployeeManagerComponent',
     layout: 'withoutmenu',
     components: {
-      create_employee
+      createEmployee
     }
   }
 </script>

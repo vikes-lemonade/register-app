@@ -1,5 +1,4 @@
 <template>
-  <body>
   <div>
     <v-row align="center" justify="space-around">
       <v-col cols="8">
@@ -14,41 +13,27 @@
             <v-text-field label="Confirm Password" v-model="confirmPassword" :rules="rules" type="password"
                           v-on:keyup.enter="validate"></v-text-field>
             <div>
-              <b-form-group>
-                <b-form-radio v-model="selected" name="some-radios" value="3">Cashier</b-form-radio>
-                <b-form-radio v-model="selected" name="some-radios" value="2">Shift Manager</b-form-radio>
-                <b-form-radio v-model="selected" name="some-radios" value="1">General Manager </b-form-radio>
-              </b-form-group>
+              <v-radio-group v-model="selected" hide-details>
+                <v-radio value="Cashier" label="Cashier"></v-radio>
+                <v-radio value="Shift Manager" label="Shift Manager"></v-radio>
+                <v-radio value="General Manager" label="General Manager"></v-radio>
+              </v-radio-group>
               <div class="mt-3">Employee Type: <strong>{{ selected }}</strong>
                 <v-btn @click="validate" :disabled="!valid" style="float: right;">Submit</v-btn>
               </div>
             </div>
           </v-form>
-          <v-snackbar v-model="snackbar" color="red darken-1">
-            {{ text }}
-            <v-btn text @click="snackbar = false">
-              Close
-            </v-btn>
-          </v-snackbar>
         </v-card>
       </v-col>
     </v-row>
-    <v-row align="center" justify="space-around" class="pt-6">
-      <pulse-loader :loading="loading" color="#AB47BC"></pulse-loader>
-    </v-row>
   </div>
-  </body>
 </template>
 
 <script>
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
   export default {
-    components: {
-      PulseLoader
-    },
     computed: {
-      rules () {
+      rules() {
         const rules = [];
 
         if (this.max) {
@@ -103,19 +88,30 @@
     }),
 
 
-    mounted: function () {
-      if (!((this.$store.getters.getEmployees.length))) {
-        this.$router.push({name: 'register'})
-      } else if (localStorage.getItem('employee') !== null) {
-        this.$router.push({name: 'index'})
-      }
-    },
+    // mounted: function () {
+    //   if (!((this.$store.getters.getEmployees.length))) {
+    //     this.$router.push({name: 'register'})
+    //   } else if (localStorage.getItem('employee') !== null) {
+    //     this.$router.push({name: 'index'})
+    //   }
+    // },
     methods: {
 
-      // async createEmployee() {
-      //
-      //   let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
-      //   this.loading = true
+      async createEmployee() {
+
+        let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
+        this.loading = true
+
+        // employeeData = {
+        //   "active": true,
+        //   "classification": this.selected,
+        //   "employeeid":,
+        //   "firstname": this.firstname,
+        //   "lastname": this.lastname,
+        //   "managerid": '',
+        //   "password": this.password
+        //
+        // }
 
 
         // await this.$axios.post(url,employeeData)
@@ -135,12 +131,12 @@
         //     this.snackbar = true
         //     this.loading = false
         //   })
-      // },
+      },
       validate() {
-        // if (this.$refs.form.validate()) {
-        //   // this.createEmployee()
-        //
-        // }
+        if (this.$refs.form.validate()) {
+          // this.createEmployee()
+
+        }
       }
     }
   }
