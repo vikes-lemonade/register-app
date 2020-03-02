@@ -1,4 +1,5 @@
 <template>
+  <body>
   <div>
     <v-row align="center" justify="space-around">
       <v-col cols="8">
@@ -14,11 +15,9 @@
                           v-on:keyup.enter="validate"></v-text-field>
             <div>
               <b-form-group>
-                <b-form-radio v-model="selected" name="some-radios" value="Cashier">Cashier</b-form-radio>
-                <b-form-radio v-model="selected" name="some-radios" value="Shift Manager">Shift Manager</b-form-radio>
-                <b-form-radio v-model="selected" name="some-radios" value="General Manager">General Manager
-                </b-form-radio>
-
+                <b-form-radio v-model="selected" name="some-radios" value="3">Cashier</b-form-radio>
+                <b-form-radio v-model="selected" name="some-radios" value="2">Shift Manager</b-form-radio>
+                <b-form-radio v-model="selected" name="some-radios" value="1">General Manager </b-form-radio>
               </b-form-group>
               <div class="mt-3">Employee Type: <strong>{{ selected }}</strong>
                 <v-btn @click="validate" :disabled="!valid" style="float: right;">Submit</v-btn>
@@ -38,6 +37,7 @@
       <pulse-loader :loading="loading" color="#AB47BC"></pulse-loader>
     </v-row>
   </div>
+  </body>
 </template>
 
 <script>
@@ -62,19 +62,14 @@
           const rule =
             v => (v || '').indexOf(' ') < 0 ||
               'No spaces are allowed';
-
-
-
           rules.push(rule)
         }
-
         if (this.confirmPassword) {
           const rule =
             v => (!!v && v) === this.password ||
-              'Values do not match'
+              'Values do not match';
           rules.push(rule)
         }
-
         return rules
       },
     },
@@ -106,6 +101,8 @@
       text: '',
       loading: false
     }),
+
+
     mounted: function () {
       if (!((this.$store.getters.getEmployees.length))) {
         this.$router.push({name: 'register'})
@@ -115,31 +112,35 @@
     },
     methods: {
 
-      async login() {
-        let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid=${this.id}`
-        this.loading = true
-        await this.$axios.get(url)
-          .then(response => {
-            if (response.data[0].password === this.password) {
-              this.$store.commit('SET_EMPLOYEE', response)
-              this.$store.dispatch('STORE_LOCAL')
-              this.$router.push({name: "index"})
-            } else {
-              this.text = 'Invalid password'
-              this.snackbar = true
-              this.loading = false
-            }
-          })
-          .catch(err => {
-            this.text = 'Invalid ID'
-            this.snackbar = true
-            this.loading = false
-          })
-      },
+      // async createEmployee() {
+      //
+      //   let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
+      //   this.loading = true
+
+
+        // await this.$axios.post(url,employeeData)
+        //   .then(response => {
+        //     if (response.data[0].password === this.password) {
+        //       this.$store.commit('SET_EMPLOYEE', response)
+        //       this.$store.dispatch('STORE_LOCAL')
+        //       this.$router.push({name: "index"})
+        //     } else {
+        //       this.text = 'Invalid password'
+        //       this.snackbar = true
+        //       this.loading = false
+        //     }
+        //   })
+        //   .catch(err => {
+        //     this.text = 'Invalid ID'
+        //     this.snackbar = true
+        //     this.loading = false
+        //   })
+      // },
       validate() {
-        if (this.$refs.form.validate()) {
-          this.login()
-        }
+        // if (this.$refs.form.validate()) {
+        //   // this.createEmployee()
+        //
+        // }
       }
     }
   }
