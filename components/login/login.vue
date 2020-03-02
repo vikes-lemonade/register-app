@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+  import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
   export default {
     components: {
       PulseLoader
@@ -44,38 +44,38 @@
       text: '',
       loading: false
     }),
+    mounted:function(){
+      if(!((this.$store.getters.getEmployees.length))){
+        this.$router.push({name: 'register'})
+      }
+      else if(localStorage.getItem('employee') !== null){
+        this.$router.push({name: 'index'})
+      }
+    },
     methods: {
-      fetch(url){
-          return this.$axios.get(url)
-      },
-      async login(){
-        if((this.id.localeCompare("") != 0) && (this.password.localeCompare("") != 0)) {
-          let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid=${this.id}`
-          let user = []
-          this.loading = true
-          await this.$axios.get(url)
-            .then(response => {
-              user = response
-            })
-            .catch(err => {
-              console.log(err)
-            })
-          this.loading = false
-          try{
-           if (user.data[0].password === this.password) {
-             await this.$router.push({name: "index"})
-           } else {
-             this.text = 'Invalid password'
-             this.snackbar = true
-           }
-          } catch {
+      async login() {
+        let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid=${this.id}`
+        this.loading = true
+        await this.$axios.get(url)
+          .then(response => {
+            if (response.data[0].password === this.password) {
+              this.$store.commit('SET_EMPLOYEE',response)
+              this.$store.dispatch('STORE_LOCAL')
+              this.$router.push({name: "index"})
+            } else {
+              this.text = 'Invalid password'
+              this.snackbar = true
+              this.loading = false
+            }
+          })
+          .catch(err => {
             this.text = 'Invalid ID'
             this.snackbar = true
-          }
-        }
+            this.loading = false
+          })
       },
-      validate(){
-        if(this.$refs.form.validate()){
+      validate() {
+        if (this.$refs.form.validate()) {
           this.login()
         }
       }

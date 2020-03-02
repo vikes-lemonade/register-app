@@ -24,7 +24,7 @@
           <v-btn :to="items[4].to" v-on:click="say('Function has not been implemented!')">
             <v-icon>{{items[4].icon}}</v-icon>{{items[4].title}}
           </v-btn>
-          <v-btn :to="items[5].to" v-on:click="say('Function has not been implemented!')">
+          <v-btn :to="items[5].to" @click="signOut">
             <v-icon>{{items[5].icon}}</v-icon>{{items[5].title}}
           </v-btn>
 
@@ -50,6 +50,11 @@ export default {
   methods: {
     say: function (msg) {
       alert(msg)
+    },
+    async signOut(){
+      this.$store.dispatch('SIGN_OUT').then(() => {
+        this.$router.push({name: 'login'})
+      })
     }
   },
   data () {
