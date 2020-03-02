@@ -69,6 +69,11 @@ export default {
   data: () => ({
 
   }),
+  mounted:function (){
+    if(localStorage.getItem('employee') === null){
+      this.$router.push({name: 'login'})
+    }
+  },
   computed: {
     ...mapGetters({
       productData: 'getProducts'

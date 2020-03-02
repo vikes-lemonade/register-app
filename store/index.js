@@ -16,7 +16,7 @@ const mutations = {
 
 const actions = {
   async FETCH_PRODUCTS({ commit }) {
-    await this.$axios.$get(URL('/products/all')) 
+    await this.$axios.$get(URL('/products/all'))
       .then(res => {
         commit("SET_PRODUCTS", res)
       })
@@ -34,7 +34,7 @@ const actions = {
       })
   },
   async FETCH_EMPLOYEES({ commit }) {
-    await this.$axios.$get(URL(`/employee/all`)) 
+    await this.$axios.$get(URL(`/employee/all`))
       .then(res => {
         commit("SET_EMPLOYEES", res)
       })
@@ -43,7 +43,7 @@ const actions = {
       })
   },
   async FETCH_EMPLOYEE({ commit }, employeeId) {
-    await this.$axios.$get(URL(`/employee?employeeid=${employeeId}`)) 
+    await this.$axios.$get(URL(`/employee?employeeid=${employeeId}`))
       .then(res => {
         commit("SET_EMPLOYEE", res)
       })
@@ -53,6 +53,18 @@ const actions = {
   },
   async nuxtServerInit({ dispatch, commit }, { req }) {
     await dispatch("FETCH_EMPLOYEES")
+  },
+  STORE_LOCAL({ getters }){
+    localStorage.setItem('employee', JSON.stringify(getters.getEmployee))
+  },
+  RETRIEVE_LOCAL({ commit }){
+    let user = JSON.parse(localStorage.getItem('employee'))
+    if(user !== null) {
+      commit("SET_EMPLOYEE", user)
+    }
+  },
+  SIGN_OUT(){
+    localStorage.removeItem('employee')
   }
 }
 
