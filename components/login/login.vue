@@ -8,7 +8,6 @@
            <v-text-field label="Password" v-model="password" :rules="passwordRules" type="password" v-on:keyup.enter="validate"></v-text-field>
            <v-btn @click="validate" :disabled="!valid">Submit</v-btn>
          </v-form>
-q
         </v-card>
       </v-col>
     </v-row>
