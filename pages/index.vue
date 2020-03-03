@@ -59,7 +59,7 @@ export default {
         if (this.$store.state.employee.classification === 1 || this.$store.state.employee.classification === 2) {
           this.$router.push({ name: "employee"})
         } else {
-          alert("You must be a manager to do this")
+          this.$router.push({ name: "employee"})
         }
       } else {
         alert("This function is not implemented yet")
