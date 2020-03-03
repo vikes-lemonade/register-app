@@ -134,8 +134,8 @@
           .then(response => {
             console.log(response)
             if (response.data.firstname === this.firstName) {
-              // this.$store.commit('SET_EMPLOYEE', response)
-              // this.$store.dispatch('STORE_LOCAL')
+              this.$store.commit('SET_EMPLOYEE', response)
+              this.$store.dispatch('STORE_LOCAL')
               this.$router.push({name: "login"})
             } else {
               this.text = 'Invalid password'
