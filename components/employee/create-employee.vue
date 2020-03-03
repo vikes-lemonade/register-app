@@ -15,9 +15,9 @@
                           v-on:keyup.enter="validate"></v-text-field>
             <div>
               <v-radio-group v-model="selected" hide-details>
-                <v-radio value="3" label="Cashier"></v-radio>
-                <v-radio value="2" label="Shift Manager"></v-radio>
-                <v-radio value="1" label="General Manager"></v-radio>
+                <v-radio value="Cashier" label="Cashier"></v-radio>
+                <v-radio value="Shift Manager" label="Shift Manager"></v-radio>
+                <v-radio value="General Manager" label="General Manager"></v-radio>
               </v-radio-group>
               <div class="mt-3">Employee Type: <strong>{{ selected }}</strong>
                 <v-btn @click="validate" :disabled="!valid" style="float: right;">Submit</v-btn>
@@ -111,22 +111,31 @@
         let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
         this.loading = true
 
+        let classification=1
+
+        if(this.selected == 'Cashier'){
+          classification=3
+
+        } else if (this.selected == 'Shift Manager'){
+          classification=2
+        }
+
         let employeeData = {
           "active": true,
-          "classification": this.selected,
-          "firstname": this.firstname,
-          "lastname": this.lastname,
+          "classification": classification,
+          "firstname": this.firstName,
+          "lastname": this.lastName,
           "managerid": '',
           "password": this.password
         }
 
-        console.log(employeeData)
 
         await this.$axios.post(url, employeeData)
           .then(response => {
-            if (response.data[0].password === this.password) {
-              this.store.commit('SET_EMPLOYEE', response)
-              this.store.dispatch('STORE_LOCAL')
+            console.log(response)
+            if (response.data.firstname === this.firstName) {
+              this.$store.commit('SET_EMPLOYEE', response)
+              this.$store.dispatch('STORE_LOCAL')
               this.$router.push({name: "login"})
             } else {
               this.text = 'Invalid password'
@@ -135,7 +144,7 @@
             }
           })
           .catch(err => {
-            this.text = 'Invalid ID'
+            this.text = 'Invalid Create'
             this.snackbar = true
             this.loading = false
           })
