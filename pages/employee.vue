@@ -11,12 +11,17 @@
 </template>
 
 <script>
-  import createEmployee from "../components/employee/create-employee";
+  import CreateEmployee from "../components/employee/CreateEmployee";
 
   export default {
     name: 'EmployeeManagerComponent',
     components: {
-      createEmployee
+      CreateEmployee
+    },
+    mounted() {
+      if (localStorage.getItem('employee') === null && this.$store.getters.getEmployeeCount > 0) {
+        this.$router.push({name: 'login'})
+      }
     }
   }
 </script>

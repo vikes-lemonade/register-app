@@ -2,6 +2,7 @@
   <div>
     <v-row align="center" justify="space-around">
       <v-col cols="8">
+        <v-alert color="info" v-model="initialEmployee" icon="info">You must create an initial employee before you can login.</v-alert>
         <v-card>
           <v-card-title>Employee Create</v-card-title>
           <v-form ref="form" v-model="valid" class="pa-6">
@@ -20,7 +21,7 @@
                 <v-radio value="General Manager" label="General Manager"></v-radio>
               </v-radio-group>
               <div class="mt-3">Employee Type: <strong>{{ selected }}</strong>
-                <v-btn @click="validate" :disabled="!valid" style="float: right;">Submit</v-btn>
+                <v-btn @click="validate" :disabled="!valid" style="float: right;" :loading="loading">Submit</v-btn>
               </div>
             </div>
           </v-form>
@@ -40,6 +41,9 @@
 
   export default {
     computed: {
+      initialEmployee() {
+        return (this.$store.getters.getEmployeeCount === 0)
+      },
       rules() {
         const rules = [];
 
@@ -96,15 +100,6 @@
       text: '',
       loading: false
     }),
-
-
-    // mounted: function () {
-    //   if (!((this.$store.getters.getEmployees.length))) {
-    //     this.$router.push({name: 'register'})
-    //   } else if (localStorage.getItem('employee') !== null) {
-    //     this.$router.push({name: 'index'})
-    //   }
-    // },
     methods: {
 
       async createEmployee() {
@@ -133,12 +128,8 @@
 
         await this.$axios.post(url, employeeData)
           .then(response => {
-            console.log(response)
             if (response.data.firstname === this.firstName) {
-              alert("Employee ID: " + response.data.employeeid)
-              this.$store.commit('SET_EMPLOYEE', response)
-              this.$store.dispatch('STORE_LOCAL')
-
+              alert(`Your Employee ID is: ${response.data.employeeid}\n Please write this down to use when logging in.`)
             } else {
               this.text = 'Invalid password'
               this.snackbar = true
@@ -151,8 +142,8 @@
             this.loading = false
           })
 
-        let employeeCount = await this.$axios.get('https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/all');
-        if (employeeCount.data.length == 1) {
+        await this.$store.dispatch("FETCH_EMPLOYEES")
+        if (this.$store.getters.getEmployeeCount == 1) {
           this.$router.push({name: "login"})
         } else {
           //  Do nothing not an initial employee.

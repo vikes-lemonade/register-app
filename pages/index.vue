@@ -8,7 +8,7 @@
             <v-card-text>
               <v-row justify="space-around" align="center">
                 <v-col cols="12" v-for="(item, index) in menuOptions" :key="index">
-                  <v-btn block color="primary" height="40px" :disabled="item.requiresManager" @click="routeChoice(index)">{{item.title}}</v-btn>    
+                  <v-btn block color="primary" height="40px" :disabled="item.requiresManager" @click="routeChoice(index)">{{item.title}}</v-btn>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -47,7 +47,9 @@ export default {
     ]
   }),
   mounted() {
-    if (localStorage.getItem('employee') === null){
+    if (this.$store.state.employeeCount <= 0) {
+      this.$router.push({ name: 'employee' })
+    } else if (localStorage.getItem('employee') === null) {
       this.$router.push({name: 'login'})
     }
   },

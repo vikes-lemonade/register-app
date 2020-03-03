@@ -4,6 +4,7 @@ export const state = () => ({
   products: [],
   product: {},
   employees: [],
+  employeeCount: null,
   employee: {
     firstname: "",
     lastname: ""
@@ -14,6 +15,7 @@ const mutations = {
   SET_PRODUCTS(state, productsArr) { state.products = productsArr},
   SET_PRODUCT(state, productObj) { state.product = productObj},
   SET_EMPLOYEES(state, employeeArr) { state.employees = employeeArr },
+  SET_EMPLOYEE_COUNT(state, count) { state.employeeCount = count},
   SET_EMPLOYEE(state, employeeObj) { state.employee = employeeObj }
 }
 
@@ -39,7 +41,7 @@ const actions = {
   async FETCH_EMPLOYEES({ commit }) {
     await this.$axios.$get(URL(`/employee/all`))
       .then(res => {
-        commit("SET_EMPLOYEES", res)
+        commit("SET_EMPLOYEE_COUNT", res.length)
       })
       .catch(err => {
         console.log(err)
@@ -63,7 +65,7 @@ const actions = {
   RETRIEVE_LOCAL({ commit }){
     let user = JSON.parse(localStorage.getItem('employee'))
     if(user !== null) {
-      commit("SET_EMPLOYEE", user.data[0])
+      commit("SET_EMPLOYEE", user)
     }
   },
   SIGN_OUT(){
@@ -74,6 +76,7 @@ const actions = {
 const getters = {
   getProducts: (state) => { return state.products },
   getProduct: (state) => { return state.product },
+  getEmployeeCount: (state) => { return state.employeeCount },
   getEmployees: (state) => { return state.employees },
   getEmployee: (state) => { return state.employee }
 }

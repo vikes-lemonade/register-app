@@ -44,15 +44,6 @@
       text: '',
       loading: false
     }),
-    mounted:async function(){
-      await this.$store.dispatch('FETCH_EMPLOYEES').then(() => {
-        if (!(this.$store.getters.getEmployees.length)) {
-          this.$router.push({name: 'employee'})
-        } else if (localStorage.getItem('employee') !== null) {
-          this.$router.push({name: 'index'})
-        }
-      })
-    },
     methods: {
       async login() {
         let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee?employeeid=${this.id}`
@@ -60,7 +51,9 @@
         await this.$axios.get(url)
           .then(response => {
             if (response.data[0].password === this.password) {
-              this.$store.commit('SET_EMPLOYEE',response)
+              let userObj = response.data[0]
+              delete userObj.password
+              this.$store.commit('SET_EMPLOYEE', userObj)
               this.$store.dispatch('STORE_LOCAL')
               this.$router.push({name: "index"})
             } else {

@@ -1,19 +1,24 @@
 <template>
   <v-container>
-    <login></login>
+    <login-form></login-form>
   </v-container>
 </template>
 
 <script>
-  import login from "../components/login/login"
+  import LoginForm from "../components/login/LoginForm"
   export default {
     layout: 'withoutmenu',
     components: {
-      login
+      LoginForm
     },
     data: () => ({
     }),
-    methods: {
-    }
+    mounted() {
+      if (this.$store.getters.getEmployeeCount <= 0) {
+        this.$router.push({name: 'employee'})
+      } else if (localStorage.getItem('employee') !== null) {
+        this.$router.push({name: 'index'})
+      }
+    },
   }
 </script>

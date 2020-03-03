@@ -82,7 +82,7 @@ export default {
   methods: {
     addProduct() {
       if (this.employeeData.classification === 1 || this.employeeData.classification === 2) {
-        this.snackText = "Adding New Product."
+        this.snackText = "This function is not quite ready for action yet"
         this.showSnack = true
       } else {
         this.snackText = "You must be a manager to create a new product"
