@@ -6,7 +6,7 @@
          <v-form ref="form" v-model="valid" class="pa-6">
            <v-text-field label="Employee ID" v-model="id" :rules="idRules" v-on:keyup.enter="validate"></v-text-field>
            <v-text-field label="Password" v-model="password" :rules="passwordRules" type="password" v-on:keyup.enter="validate"></v-text-field>
-           <v-btn @click="validate" :disabled="!valid">Submit</v-btn>
+           <v-btn @click="validate" :disabled="!valid">LOGIN</v-btn>
          </v-form>
           <v-snackbar v-model="snackbar" color="red darken-1">
             {{ text }}
@@ -44,13 +44,14 @@
       text: '',
       loading: false
     }),
-    mounted:function(){
-      if(!((this.$store.getters.getEmployees.length))){
-        this.$router.push({name: 'register'})
-      }
-      else if(localStorage.getItem('employee') !== null){
-        this.$router.push({name: 'index'})
-      }
+    mounted:async function(){
+      await this.$store.dispatch('FETCH_EMPLOYEES').then(() => {
+        if (!(this.$store.getters.getEmployees.length)) {
+          this.$router.push({name: 'employee'})
+        } else if (localStorage.getItem('employee') !== null) {
+          this.$router.push({name: 'index'})
+        }
+      })
     },
     methods: {
       async login() {

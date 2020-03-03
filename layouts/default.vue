@@ -21,13 +21,13 @@
           <v-btn :to="items[2].to" v-on:click="say('Function has not been implemented!')" text>
             <v-icon>{{items[2].icon}}</v-icon>| {{items[2].title}}
           </v-btn>
-          <v-btn :to="items[3].to" v-on:click="say('Function has not been implemented!')" text>
+          <v-btn :to="items[3].to" text>
             <v-icon>{{items[3].icon}}</v-icon>| {{items[3].title}}
           </v-btn>
           <v-btn :to="items[4].to" v-on:click="say('Function has not been implemented!')" text>
             <v-icon>{{items[4].icon}}</v-icon>| {{items[4].title}}
           </v-btn>
-          <v-btn :to="items[5].to" @click="signOut" text>
+          <v-btn :to="items[5].to" v-on:click="signOut" text>
             <v-icon>{{items[5].icon}}</v-icon>| {{items[5].title}}
           </v-btn>
 
@@ -84,7 +84,7 @@ export default {
         {
           icon: '',
           title: 'Employee Detail',
-          to: ''
+          to: '/employee'
         },
         {
           icon: '',
