@@ -8,12 +8,7 @@
            <v-text-field label="Password" v-model="password" :rules="passwordRules" type="password" v-on:keyup.enter="validate"></v-text-field>
            <v-btn @click="validate" :disabled="!valid">Submit</v-btn>
          </v-form>
-          <v-snackbar v-model="snackbar" color="red darken-1">
-            {{ text }}
-            <v-btn text @click="snackbar = false">
-              Close
-            </v-btn>
-          </v-snackbar>
+q
         </v-card>
       </v-col>
     </v-row>

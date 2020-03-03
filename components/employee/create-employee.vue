@@ -3,26 +3,33 @@
     <v-row align="center" justify="space-around">
       <v-col cols="8">
         <v-card>
+          <v-card-title>Employee Create</v-card-title>
           <v-form ref="form" v-model="valid" class="pa-6">
             <v-text-field label="First Name" v-model="firstName" :rules="nameRules"
                           v-on:keyup.enter="validate"></v-text-field>
             <v-text-field label="Last Name" v-model="lastName" :rules="nameRules"
                           v-on:keyup.enter="validate"></v-text-field>
-            <v-text-field label="Password" v-model="password" :rules="rules" type="password"
+            <v-text-field label="Password" v-model="password" :rules="rules"  type="password"
                           v-on:keyup.enter="validate"></v-text-field>
             <v-text-field label="Confirm Password" v-model="confirmPassword" :rules="rules" type="password"
                           v-on:keyup.enter="validate"></v-text-field>
             <div>
               <v-radio-group v-model="selected" hide-details>
-                <v-radio value="Cashier" label="Cashier"></v-radio>
-                <v-radio value="Shift Manager" label="Shift Manager"></v-radio>
-                <v-radio value="General Manager" label="General Manager"></v-radio>
+                <v-radio value="3" label="Cashier"></v-radio>
+                <v-radio value="2" label="Shift Manager"></v-radio>
+                <v-radio value="1" label="General Manager"></v-radio>
               </v-radio-group>
               <div class="mt-3">Employee Type: <strong>{{ selected }}</strong>
                 <v-btn @click="validate" :disabled="!valid" style="float: right;">Submit</v-btn>
               </div>
             </div>
           </v-form>
+          <v-snackbar v-model="snackbar" color="red darken-1">
+            {{ text }}
+            <v-btn text @click="snackbar = false">
+              Close
+            </v-btn>
+          </v-snackbar>
         </v-card>
       </v-col>
     </v-row>
@@ -40,6 +47,11 @@
           const rule =
             v => (v || '').length <= this.max ||
               `A maximum of ${this.max} characters is allowed`;
+          rules.push(rule)
+        }
+
+        if (this.password || this.confirmPassword == '') {
+          const rule = v => !!v || 'The password must not be empty'
           rules.push(rule)
         }
 
@@ -65,23 +77,20 @@
     },
 
     data: () => ({
+      selected: 'Cashier',
       valid: true,
       allowSpaces: false,
       firstName: '',
       lastName: '',
-      selected: '',
+      password: '',
+      confirmPassword: '',
 
       nameRules: [
         v => !!v || 'Name must not be empty',
         v => (v || '').indexOf(' ') < 0 ||
           'No spaces are allowed'
       ],
-      password: '',
-      confirmPassword: '',
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => v.password === v.confirmPassword || 'Passwords must match'
-      ],
+
       snackbar: false,
       text: '',
       loading: false
@@ -102,40 +111,38 @@
         let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
         this.loading = true
 
-        // employeeData = {
-        //   "active": true,
-        //   "classification": this.selected,
-        //   "employeeid":,
-        //   "firstname": this.firstname,
-        //   "lastname": this.lastname,
-        //   "managerid": '',
-        //   "password": this.password
-        //
-        // }
+        let employeeData = {
+          "active": true,
+          "classification": this.selected,
+          "firstname": this.firstname,
+          "lastname": this.lastname,
+          "managerid": '',
+          "password": this.password
+        }
 
+        console.log(employeeData)
 
-        // await this.$axios.post(url,employeeData)
-        //   .then(response => {
-        //     if (response.data[0].password === this.password) {
-        //       this.$store.commit('SET_EMPLOYEE', response)
-        //       this.$store.dispatch('STORE_LOCAL')
-        //       this.$router.push({name: "index"})
-        //     } else {
-        //       this.text = 'Invalid password'
-        //       this.snackbar = true
-        //       this.loading = false
-        //     }
-        //   })
-        //   .catch(err => {
-        //     this.text = 'Invalid ID'
-        //     this.snackbar = true
-        //     this.loading = false
-        //   })
+        await this.$axios.post(url, employeeData)
+          .then(response => {
+            if (response.data[0].password === this.password) {
+              this.store.commit('SET_EMPLOYEE', response)
+              this.store.dispatch('STORE_LOCAL')
+              this.$router.push({name: "login"})
+            } else {
+              this.text = 'Invalid password'
+              this.snackbar = true
+              this.loading = false
+            }
+          })
+          .catch(err => {
+            this.text = 'Invalid ID'
+            this.snackbar = true
+            this.loading = false
+          })
       },
       validate() {
         if (this.$refs.form.validate()) {
-          // this.createEmployee()
-
+          this.createEmployee()
         }
       }
     }
