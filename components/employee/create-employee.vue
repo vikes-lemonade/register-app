@@ -9,7 +9,7 @@
                           v-on:keyup.enter="validate"></v-text-field>
             <v-text-field label="Last Name" v-model="lastName" :rules="nameRules"
                           v-on:keyup.enter="validate"></v-text-field>
-            <v-text-field label="Password" v-model="password" :rules="rules"  type="password"
+            <v-text-field label="Password" v-model="password" :rules="rules" type="password"
                           v-on:keyup.enter="validate"></v-text-field>
             <v-text-field label="Confirm Password" v-model="confirmPassword" :rules="rules" type="password"
                           v-on:keyup.enter="validate"></v-text-field>
@@ -83,6 +83,7 @@
       firstName: '',
       lastName: '',
       password: '',
+      employeeid: 'temp employeeid',
       confirmPassword: '',
 
       nameRules: [
@@ -111,13 +112,13 @@
         let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
         this.loading = true
 
-        let classification=1
+        let classification = 1
 
-        if(this.selected == 'Cashier'){
-          classification=3
+        if (this.selected == 'Cashier') {
+          classification = 3
 
-        } else if (this.selected == 'Shift Manager'){
-          classification=2
+        } else if (this.selected == 'Shift Manager') {
+          classification = 2
         }
 
         let employeeData = {
@@ -134,9 +135,10 @@
           .then(response => {
             console.log(response)
             if (response.data.firstname === this.firstName) {
+              alert("Employee ID: " + response.data.employeeid)
               this.$store.commit('SET_EMPLOYEE', response)
               this.$store.dispatch('STORE_LOCAL')
-              this.$router.push({name: "login"})
+
             } else {
               this.text = 'Invalid password'
               this.snackbar = true
@@ -148,6 +150,15 @@
             this.snackbar = true
             this.loading = false
           })
+
+        let employeeCount = await this.$axios.get('https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/all');
+        if (employeeCount.data.length == 1) {
+          this.$router.push({name: "login"})
+        } else {
+          //  Do nothing not an initial employee.
+          console.log('Do nothing not an initial employee')
+        }
+
       },
       validate() {
         if (this.$refs.form.validate()) {
