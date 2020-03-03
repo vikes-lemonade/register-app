@@ -15,7 +15,6 @@
 
   export default {
     name: 'EmployeeManagerComponent',
-    layout: 'withoutmenu',
     components: {
       createEmployee
     }
