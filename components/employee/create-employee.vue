@@ -83,6 +83,7 @@
       firstName: '',
       lastName: '',
       password: '',
+      employeeid:'temp employeeid',
       confirmPassword: '',
 
       nameRules: [
@@ -134,6 +135,7 @@
           .then(response => {
             console.log(response)
             if (response.data.firstname === this.firstName) {
+              alert("Employee ID: "+ response.data.employeeid)
               this.$store.commit('SET_EMPLOYEE', response)
               this.$store.dispatch('STORE_LOCAL')
               this.$router.push({name: "login"})
