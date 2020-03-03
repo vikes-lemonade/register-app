@@ -50,8 +50,8 @@
           rules.push(rule)
         }
 
-        if (this.password || this.confirmPassword == '') {
-          const rule = v => !!v || 'The password must not be empty'
+        if (this.password || this.confirmPassword === '') {
+          const rule = v => !!v || 'The password must not be empty';
           rules.push(rule)
         }
 
@@ -105,18 +105,19 @@
     //   }
     // },
     methods: {
+      $store: undefined,
 
       async createEmployee() {
 
-        let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`
-        this.loading = true
+        let url = `https://peaceful-bastion-45955.herokuapp.com/api/v1/employee/create`;
+        this.loading = true;
 
-        let classification=1
+        let classification=1;
 
-        if(this.selected == 'Cashier'){
+        if(this.selected === 'Cashier'){
           classification=3
 
-        } else if (this.selected == 'Shift Manager'){
+        } else if (this.selected === 'Shift Manager'){
           classification=2
         }
 
@@ -127,27 +128,28 @@
           "lastname": this.lastName,
           "managerid": '',
           "password": this.password
-        }
+        };
 
 
         await this.$axios.post(url, employeeData)
           .then(response => {
-            console.log(response)
+            console.log(response);
             if (response.data.firstname === this.firstName) {
-              this.$store.commit('SET_EMPLOYEE', response)
-              this.$store.dispatch('STORE_LOCAL')
+              this.$store.commit('SET_EMPLOYEE', response);
+              this.$store.dispatch('STORE_LOCAL');
               this.$router.push({name: "login"})
             } else {
-              this.text = 'Invalid password'
-              this.snackbar = true
+              this.text = 'Invalid password';
+              this.snackbar = true;
               this.loading = false
             }
           })
           .catch(err => {
+
             this.text = 'Invalid Create'
             this.snackbar = true
             this.loading = false
-          })
+          });
       },
       validate() {
         if (this.$refs.form.validate()) {
