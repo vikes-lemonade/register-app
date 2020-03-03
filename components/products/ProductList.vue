@@ -1,12 +1,15 @@
 <template>
   <div>
+    <v-snackbar v-model="showSnack" :timeout="5000" top color="error">
+      {{snackText}}<v-spacer/>&nbsp;<v-icon @click="showSnack = false">close</v-icon>
+    </v-snackbar>
     <v-row justify="space-around" align="center">
       <v-col cols="12">
         <v-card color="accent">
           <v-card-title>
             <div class="display-1 font-weight-lighter white--text">Product Listings</div>
             <v-spacer/>
-            <v-btn color="deep-purple darken-3 white--text"><v-icon>add</v-icon>&nbsp; Create New Product</v-btn>
+            <v-btn color="deep-purple darken-3 white--text" @click="addProduct"><v-icon>add</v-icon>&nbsp; Create New Product</v-btn>
           </v-card-title>
           <v-card-text>
             <v-data-iterator :items="productData" hide-default-footer>
@@ -67,17 +70,25 @@ export default {
   name: "Products",
   props: [],
   data: () => ({
-
+    showSnack: false,
+    snackText: ""
   }),
-  mounted:function (){
-    if(localStorage.getItem('employee') === null){
-      this.$router.push({name: 'login'})
-    }
-  },
   computed: {
     ...mapGetters({
-      productData: 'getProducts'
-    })
+      productData: 'getProducts',
+      employeeData: 'getEmployee'
+    }),
+  },
+  methods: {
+    addProduct() {
+      if (this.employeeData.classification === 1 || this.employeeData.classification === 2) {
+        this.snackText = "Adding New Product."
+        this.showSnack = true
+      } else {
+        this.snackText = "You must be a manager to create a new product"
+        this.showSnack = true
+      }
+    }
   }
 }
 </script>

@@ -4,7 +4,10 @@ export const state = () => ({
   products: [],
   product: {},
   employees: [],
-  employee: {}
+  employee: {
+    firstname: "",
+    lastname: ""
+  }
 })
 
 const mutations = {
@@ -15,7 +18,7 @@ const mutations = {
 }
 
 const actions = {
-  async FETCH_PRODUCTS({ commit }) {
+  async FETCH_PRODUCTS({ dispatch, commit }) {
     await this.$axios.$get(URL('/products/all'))
       .then(res => {
         commit("SET_PRODUCTS", res)
@@ -24,7 +27,7 @@ const actions = {
         console.log(err)
       })
   },
-  async FETCH_PRODUCT({ commit }, lookupCode) {
+  async FETCH_PRODUCT({ dispatch, commit }, lookupCode) {
     await this.$axios.$get(URL(`/product?lookup=${lookupCode}`))
       .then(res => {
         commit("SET_PRODUCT", res)
@@ -60,7 +63,7 @@ const actions = {
   RETRIEVE_LOCAL({ commit }){
     let user = JSON.parse(localStorage.getItem('employee'))
     if(user !== null) {
-      commit("SET_EMPLOYEE", user)
+      commit("SET_EMPLOYEE", user.data[0])
     }
   },
   SIGN_OUT(){
