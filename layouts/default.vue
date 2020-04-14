@@ -31,6 +31,20 @@
             <v-icon>{{items[5].icon}}</v-icon>| {{items[5].title}}
           </v-btn>
 
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on: menu }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-btn v-on="{ ...tooltip, ...menu }" icon>
+                    <v-icon>shopping_cart</v-icon>
+                    ({{ cartLength }})
+                  </v-btn>
+                </template>
+                View Shopping Cart or Checkout
+              </v-tooltip>
+            </template>
+            <Cart v-on:updateCart="updateCartLength" />
+          </v-menu>
         </v-toolbar-items>
 
       </v-toolbar>
