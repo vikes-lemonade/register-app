@@ -19,6 +19,7 @@ export default {
   data: () => ({
 
   }),
+  cartLength: 0,
   async asyncData({store}) {
      await store.dispatch("FETCH_PRODUCTS")
   },
