@@ -8,28 +8,42 @@
         </v-toolbar-title>
         <v-spacer/>
         <v-toolbar-items>
-          <!--  <v-btn v-for="(item, index) in items" :key="index" :to="item.to" text>
-            <v-icon>{{item.icon}}</v-icon>{{item.title}}
-          </v-btn>
-          -->
+
           <v-btn :to="items[0].to" text>
-            <v-icon>{{items[0].icon}}</v-icon>| {{items[0].title}}
+            <v-icon>{{items[0].icon}}</v-icon> {{items[0].title}}
           </v-btn>
-          <v-btn :to="items[1].to" text>
-            <v-icon>{{items[1].icon}}</v-icon>| {{items[1].title}}
-          </v-btn>
-          <v-btn :to="items[2].to" v-on:click="say('Function has not been implemented!')" text>
-            <v-icon>{{items[2].icon}}</v-icon>| {{items[2].title}}
-          </v-btn>
-          <v-btn :to="items[3].to" text>
-            <v-icon>{{items[3].icon}}</v-icon>| {{items[3].title}}
-          </v-btn>
-          <v-btn :to="items[4].to" v-on:click="say('Function has not been implemented!')" text>
-            <v-icon>{{items[4].icon}}</v-icon>| {{items[4].title}}
-          </v-btn>
-          <v-btn :to="items[5].to" v-on:click="signOut" text>
-            <v-icon>{{items[5].icon}}</v-icon>| {{items[5].title}}
-          </v-btn>
+
+          <v-menu offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                v-on="on"
+              >
+                <v-icon>person</v-icon> User
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                :key="index"
+                :to= "items[3].to"
+              >
+                <v-list-item-title>View employee details</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                :key="index"
+                :to= "items[4].to"
+              >
+                <v-list-item-title>View Transaction Report</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                :key="index"
+                v-on:click="signOut"
+              >
+                <v-list-item-title>Sign out</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
+
 
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on: menu }">
@@ -102,14 +116,16 @@ export default {
         },
         {
           icon: '',
-          title: 'Cashier Report',
-          to: ''
+          title: 'Transaction Report',
+          to: '/error'
         },
         {
           icon: '',
           title: 'Sign out',
-          to: ''
+          to: '/login'
         }
+
+
       ],
     }
   },
