@@ -76,11 +76,22 @@
 </template>
 
 <script>
+import Cart from "../components/cart/Cart"
 
 export default {
+  components: { Cart },
   methods: {
     say: function (msg) {
       alert(msg)
+    },
+    updateCartLength() {
+      try {
+        if (localStorage.getItem("cart")) {
+          this.cartLength = JSON.parse(localStorage.getItem("cart")).length
+        }
+      } catch(e) {
+      localStorage.removeItem("cart")
+      }
     },
     async signOut(){
       this.$store.dispatch('SIGN_OUT').then(() => {
@@ -90,6 +101,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch("RETRIEVE_LOCAL")
+    try {
+      if (localStorage.getItem("cart")) {
+        this.cartLength = JSON.parse(localStorage.getItem("cart")).length
+      }
+    } catch(e) {
+      localStorage.removeItem("cart")
+    }
   },
   data () {
     return {
@@ -127,6 +145,7 @@ export default {
 
 
       ],
+      cartLength: 0
     }
   },
   computed: {
