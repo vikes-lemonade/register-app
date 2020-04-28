@@ -120,14 +120,16 @@ export default {
         },
         {
           icon: '',
-          title: 'Cashier Report',
-          to: ''
+          title: 'Transaction Report',
+          to: '/error'
         },
         {
           icon: '',
           title: 'Sign out',
-          to: ''
+          to: '/login'
         }
+
+
       ],
       cartLength: 0,
       employeeCart: [],
