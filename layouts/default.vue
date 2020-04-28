@@ -35,13 +35,6 @@
                 <v-list-item-title>View employee details</v-list-item-title>
               </v-list-item>
               <v-list-item
-                v-if="isManager"
-                :key="items[4].title"
-                :to= "items[4].to"
-              >
-                <v-list-item-title>View Transaction Report</v-list-item-title>
-              </v-list-item>
-              <v-list-item
                 key="signOut"
                 v-on:click="signOut"
               >
