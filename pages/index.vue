@@ -8,7 +8,7 @@
             <v-card-text>
               <v-row justify="space-around" align="center">
                 <v-col cols="12" v-for="(item, index) in menuOptions" :key="index">
-                  <v-btn block color="primary" height="40px" :disabled="item.requiresManager" @click="routeChoice(index)">{{item.title}}</v-btn>
+                  <v-btn block color="primary" height="40px" :disabled="item.requiresManager && !isManager" @click="routeChoice(index)">{{item.title}}</v-btn>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -37,14 +37,11 @@ export default {
         requiresManager: true
       },
       {
-        title: "View Employee Details",
+        title: "Employee Details",
         requiresManager: true
       },
-      {
-        title: "Generate Cashier Report",
-        requiresManager: true
-      },
-    ]
+    ],
+    isManager: false
   }),
   mounted() {
     if (this.$store.state.employeeCount <= 0) {
@@ -52,17 +49,20 @@ export default {
     } else if (localStorage.getItem('employee') === null) {
       this.$router.push({name: 'login'})
     }
+
+    this.$store.dispatch("RETRIEVE_LOCAL")
+    if (this.$store.state.employee.classification === 1 || this.$store.state.employee.classification === 2) {
+      this.isManager = true
+    }
   },
   methods: {
     routeChoice(choice) {
       if (choice === 0) {
         this.$router.push({ name: "products" })
-      } else if (choice === 1) {
-        if (this.$store.state.employee.classification === 1 || this.$store.state.employee.classification === 2) {
+      } else if (choice === 1 || choice === 3) {
           this.$router.push({ name: "employee"})
-        } else {
-          this.$router.push({ name: "employee"})
-        }
+      } else if (choice === 2) {
+        this.$router.push({ name: "products" })
       } else {
         alert("This function is not implemented yet")
       }
