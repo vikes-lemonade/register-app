@@ -30,7 +30,7 @@ export default {
       },
       {
         title: "Create New Employee",
-        requiresManager: false
+        requiresManager: true
       },
       {
         title: "Start Transaction",
