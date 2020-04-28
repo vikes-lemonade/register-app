@@ -7,7 +7,7 @@ export const state = () => ({
   employeeCount: null,
   employee: {
     firstname: "",
-    lastname: ""
+    lastname: "",
   }
 })
 
@@ -70,11 +70,14 @@ const actions = {
   },
   SIGN_OUT(){
     localStorage.removeItem('employee')
+    localStorage.removeItem("cart")
   }
 }
 
 const getters = {
-  getProducts: (state) => { return state.products },
+  getProducts: (state) => {
+    return state.products
+  },
   getProduct: (state) => { return state.product },
   getEmployeeCount: (state) => { return state.employeeCount },
   getEmployees: (state) => { return state.employees },
